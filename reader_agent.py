@@ -61,7 +61,7 @@ class ReaderAgent(BaseAgent):
                 "data": None
             }
         urls= input_data.get("urls", [])
-        max_pages= input_data.get("max_pages", 3)  # Default limit to 3 pages
+        max_pages= input_data.get("max_pages", 3) 
         
         scraped_contents= []
         errors= []
