@@ -36,17 +36,24 @@ wheels/
 *~
 .DS_Store
 
-# Results
-*.json
+# Results and outputs
 results/
 output/
 logs/
+
+*.json
 
 # Testing
 .pytest_cache/
 .coverage
 htmlcov/
 
+# Streamlit
+.streamlit/
+.streamlit/secrets.toml
+
 # Temp files
+*.tmp
+*.log
 *.tmp
 .cache/
