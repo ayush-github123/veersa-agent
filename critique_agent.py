@@ -1,8 +1,3 @@
-"""
-Critic Agent for the multi-agent system using Groq.
-Evaluates research reports for quality, accuracy, and completeness.
-"""
-
 import os
 from typing import Any, Dict, List, Optional
 from dotenv import load_dotenv
