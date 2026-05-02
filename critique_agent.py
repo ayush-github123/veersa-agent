@@ -11,7 +11,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from base_agent import BaseAgent
 
 class CritiqueAgent(BaseAgent):
-    def __init__(self, api_key: Optional[str] = None, config: Optional[Dict[str, Any]] = None):
+    def __init__(self, api_key: Optional[str]=None, config: Optional[Dict[str, Any]]=None):
         super().__init__(
             name="CritiqueAgent",
             description="Evaluates and provides feedback on research reports using Groq",
@@ -24,7 +24,7 @@ class CritiqueAgent(BaseAgent):
             raise ValueError("GROQ_API_KEY must be provided or set in environment variables.")
 
         model_name=self.config.get("model_name", "llama-3.3-70b-versatile")
-        temperature=self.config.get("temperature", 0.3)  # Lower temperature for objective criticism
+        temperature=self.config.get("temperature", 0.3)  
         
         self.llm=ChatGroq(
             groq_api_key=self.api_key,
