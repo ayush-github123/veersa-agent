@@ -12,9 +12,6 @@ class Config:
     def __init__(self, env_file: Optional[str] = None):
         """
         Initialize configuration.
-        
-        Args:
-            env_file: Path to .env file (default: .env in current directory)
         """
         if env_file:
             load_dotenv(env_file)
@@ -36,6 +33,14 @@ class Config:
             "timeout": int(os.getenv("SEARCH_TIMEOUT", 15)),
             "max_results": int(os.getenv("SEARCH_MAX_RESULTS", 10))
         }
+    
+    @property
+    def groq_api_key(self) -> str:
+        """Get Groq API key from environment."""
+        api_key = os.getenv("GROQ_API_KEY")
+        if not api_key:
+            raise ValueError("GROQ_API_KEY environment variable is not set.")
+        return api_key
     
     @property
     def log_level(self) -> str:
