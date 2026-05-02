@@ -1,5 +1,7 @@
 # Multi-Agent Research System - Architecture
 
+![System Architecture Diagram](Multi%20Research%20Agentic%20AI.png)
+
 An AI-powered research automation system that utilizes a sequential pipeline of specialized intelligent agents to transform a research topic into a comprehensive, evaluated report.
 
 ## 🏗️ System Overview
