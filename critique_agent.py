@@ -38,24 +38,26 @@ class CritiqueAgent(BaseAgent):
         report_content=input_data.get("report")
         
         prompt=ChatPromptTemplate.from_template("""
-        You are a Senior Editor and Fact-Checker. Your task is to evaluate the following research report on: {topic}
+        You are a Senior Research Editor and Domain Expert. Provide a detailed evaluation of this report on: {topic}
         
         REPORT CONTENT:
         {report}
         
-        CRITIQUE CRITERIA:
-        1. Accuracy: Are there any logical fallacies or questionable claims?
-        2. Completeness: Are there major aspects of the topic missing?
-        3. Structure: Is the report easy to follow and professional?
-        4. Citations: Are the references integrated correctly?
+        EVALUATE ON:
+        1. **Accuracy & Evidence**: Fact accuracy, claim substantiation, logical consistency
+        2. **Depth & Completeness**: Coverage breadth, missing critical aspects, unexplored angles
+        3. **Structure & Clarity**: Organization, readability, flow, professional presentation
+        4. **Data Quality**: Source credibility, data freshness, evidence strength
+        5. **Actionability**: Practical insights, recommendations clarity, business value
         
-        OUTPUT FORMAT:
-        - Score (1-10)
-        - Strengths
-        - Weaknesses
-        - Suggestions for Improvement
+        PROVIDE:
+        - **Overall Score**: Rate 1-10 with reasoning
+        - **Strengths**: 3-4 specific strengths with examples
+        - **Critical Gaps**: Specific areas needing expansion or correction
+        - **Priority Improvements**: Top 3 actionable enhancements
+        - **Recommendation**: Pass/Revise with justification
         
-        Tone: Critical, objective, and constructive.
+        Be specific, data-driven, and constructive.
         """)
 
         try:
@@ -63,6 +65,8 @@ class CritiqueAgent(BaseAgent):
             print(f"--- {self.name} is reviewing the report for: {topic} ---")
             
             response=chain.invoke({"topic": topic, "report": report_content})
+            feedback=response.content
+            is_approved="Pass" in feedback or ("Score: 8" in feedback or "Score: 9" in feedback or "Score: 10" in feedback)
             
             if hasattr(self, 'update_execution_time'):
                 self.update_execution_time()
@@ -70,8 +74,8 @@ class CritiqueAgent(BaseAgent):
             return{
                 "success": True,
                 "data":{
-                    "feedback": response.content,
-                    "is_approved": "Score: 8" in response.content or "Score: 9" in response.content or "Score: 10" in response.content
+                    "feedback": feedback,
+                    "is_approved": is_approved
                 }
             }
         except Exception as e:

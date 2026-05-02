@@ -24,7 +24,7 @@ class WriterAgent(BaseAgent):
             raise ValueError("GROQ_API_KEY must be provided or set in environment variables.")
 
         model_name=self.config.get("model_name", "llama-3.3-70b-versatile")
-        temperature=self.config.get("temperature", 0.5)
+        temperature=self.config.get("temperature", 0.7)
         
         self.llm=ChatGroq(
             groq_api_key=self.api_key,
@@ -49,19 +49,30 @@ class WriterAgent(BaseAgent):
         full_context="\n\n---\n\n".join(context_blocks)
 
         prompt=ChatPromptTemplate.from_template("""
-        You are a Professional Research Analyst. Write a comprehensive report on: {topic}
+        You are a Senior Research Analyst. Write a comprehensive, in-depth report on: {topic}
         
         RESEARCH DATA:
         {context}
         
-        STRUCTURE:
-        1. Introduction
-        2. Key Findings
-        3. Technical Insights
-        4. Conclusion
-        5. References (URLs only)
+        STRUCTURE (BE THOROUGH & DETAILED):
+        1. **Executive Summary** - Key takeaways and insights (200+ words)
+        2. **Introduction** - Context and significance of the topic
+        3. **Market/Industry Overview** - Landscape, trends, and dynamics
+        4. **Key Findings** - Analysis of 4-5 major findings with evidence
+        5. **Technical Deep Dive** - Mechanisms, methodologies, implementation details
+        6. **Comparative Analysis** - How this contrasts with alternatives/competitors
+        7. **Implications & Impact** - Business, technical, or social implications
+        8. **Challenges & Limitations** - Known issues, risks, constraints
+        9. **Future Outlook** - Emerging trends, projected evolution
+        10. **Recommendations** - Actionable next steps (3-5 specific recommendations)
+        11. **References** - All sources with URLs
         
-        Tone: Professional and objective. Respond in Markdown format.
+        REQUIREMENTS:
+        - Minimum 2000 words total
+        - Use data and statistics wherever available
+        - Include specific examples and case studies
+        - Maintain professional, analytical tone
+        - Provide nuanced, balanced perspective
         """)
 
         try:
