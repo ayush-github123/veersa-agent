@@ -82,7 +82,7 @@ class ReaderAgent(BaseAgent):
             "success": len(scraped_contents) > 0,
             "error": None if not errors else f"Failed to scrape {len(errors)} pages",
             "data": {
-                "results": scraped_contents,
+                "scraped_contents": scraped_contents,
                 "errors": errors if errors else None,
                 "pages_processed": len(scraped_contents)
             }
