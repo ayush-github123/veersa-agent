@@ -23,10 +23,10 @@ class WriterAgent(BaseAgent):
         if not self.api_key:
             raise ValueError("GROQ_API_KEY must be provided or set in environment variables.")
 
-        model_name = self.config.get("model_name", "llama-3.3-70b-versatile")
-        temperature = self.config.get("temperature", 0.5)
+        model_name=self.config.get("model_name", "llama-3.3-70b-versatile")
+        temperature=self.config.get("temperature", 0.5)
         
-        self.llm = ChatGroq(
+        self.llm=ChatGroq(
             groq_api_key=self.api_key,
             model_name=model_name,
             temperature=temperature
@@ -39,16 +39,16 @@ class WriterAgent(BaseAgent):
         if not self.validate_input(input_data):
             return {"success": False, "error": "Missing topic or research_data"}
 
-        topic = input_data.get("topic")
-        research_results = input_data.get("research_data", [])
+        topic=input_data.get("topic")
+        research_results=input_data.get("research_data", [])
         
-        context_blocks = [
+        context_blocks=[
             f"Source: {item.get('url')}\nContent: {item.get('content')}" 
             for item in research_results
         ]
-        full_context = "\n\n---\n\n".join(context_blocks)
+        full_context="\n\n---\n\n".join(context_blocks)
 
-        prompt = ChatPromptTemplate.from_template("""
+        prompt=ChatPromptTemplate.from_template("""
         You are a Professional Research Analyst. Write a comprehensive report on: {topic}
         
         RESEARCH DATA:
@@ -65,17 +65,17 @@ class WriterAgent(BaseAgent):
         """)
 
         try:
-            chain = prompt | self.llm
+            chain=prompt | self.llm
             print(f"--- {self.name} is drafting the report for: {topic} ---")
             
-            response = chain.invoke({"topic": topic, "context": full_context})
+            response=chain.invoke({"topic": topic, "context": full_context})
             
             if hasattr(self, 'update_execution_time'):
                 self.update_execution_time()
             
-            return {
+            return{
                 "success": True,
                 "data": {"report": response.content}
             }
         except Exception as e:
-            return {"success": False, "error": f"Groq execution failed: {str(e)}"}
+            return{"success": False, "error": f"Groq execution failed: {str(e)}"}
