@@ -64,7 +64,7 @@ class CritiqueAgent(BaseAgent):
         """)
 
         try:
-            chain=prompt | self.llm
+            chain=prompt|self.llm
             print(f"--- {self.name} is reviewing the report for: {topic} ---")
             
             response=chain.invoke({"topic": topic, "report": report_content})
@@ -74,7 +74,7 @@ class CritiqueAgent(BaseAgent):
             
             return{
                 "success": True,
-                "data": {
+                "data":{
                     "feedback": response.content,
                     "is_approved": "Score: 8" in response.content or "Score: 9" in response.content or "Score: 10" in response.content
                 }
