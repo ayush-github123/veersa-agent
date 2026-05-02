@@ -18,15 +18,15 @@ class CritiqueAgent(BaseAgent):
             config=config or {}
         )
         
-        self.api_key = api_key or os.getenv("GROQ_API_KEY")
+        self.api_key=api_key or os.getenv("GROQ_API_KEY")
         
         if not self.api_key:
             raise ValueError("GROQ_API_KEY must be provided or set in environment variables.")
 
-        model_name = self.config.get("model_name", "llama-3.3-70b-versatile")
-        temperature = self.config.get("temperature", 0.3)  # Lower temperature for objective criticism
+        model_name=self.config.get("model_name", "llama-3.3-70b-versatile")
+        temperature=self.config.get("temperature", 0.3)  # Lower temperature for objective criticism
         
-        self.llm = ChatGroq(
+        self.llm=ChatGroq(
             groq_api_key=self.api_key,
             model_name=model_name,
             temperature=temperature
@@ -35,14 +35,14 @@ class CritiqueAgent(BaseAgent):
     def validate_input(self, input_data: Dict[str, Any]) -> bool:
         return "topic" in input_data and "report" in input_data
 
-    def execute(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
+    def execute(self, input_data: Dict[str, Any])-> Dict[str, Any]:
         if not self.validate_input(input_data):
             return {"success": False, "error": "Missing topic or report content"}
 
-        topic = input_data.get("topic")
-        report_content = input_data.get("report")
+        topic=input_data.get("topic")
+        report_content=input_data.get("report")
         
-        prompt = ChatPromptTemplate.from_template("""
+        prompt=ChatPromptTemplate.from_template("""
         You are a Senior Editor and Fact-Checker. Your task is to evaluate the following research report on: {topic}
         
         REPORT CONTENT:
@@ -64,15 +64,15 @@ class CritiqueAgent(BaseAgent):
         """)
 
         try:
-            chain = prompt | self.llm
+            chain=prompt | self.llm
             print(f"--- {self.name} is reviewing the report for: {topic} ---")
             
-            response = chain.invoke({"topic": topic, "report": report_content})
+            response=chain.invoke({"topic": topic, "report": report_content})
             
             if hasattr(self, 'update_execution_time'):
                 self.update_execution_time()
             
-            return {
+            return{
                 "success": True,
                 "data": {
                     "feedback": response.content,
