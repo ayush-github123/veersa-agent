@@ -135,7 +135,7 @@ class SearchAgent(BaseAgent):
         for result in data.get("organic_results", [])[:num_results]:
             results.append({
                 "title": result.get("title", ""),
-                "url": result.get("link", ""),
+                "link": result.get("link", ""),
                 "snippet": result.get("snippet", ""),
                 "position": result.get("position", 0)
             })
