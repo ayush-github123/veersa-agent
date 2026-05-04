@@ -374,7 +374,7 @@ MIT License
 
 Veritas demonstrates how complex tasks become more reliable when intelligence is distributed rather than centralized.
 
-By separating research into discovery, extraction, writing, and critique, the system mirrors how real teams collaborate — where specialization improves both quality and efficiency.
+By separating research into discovery, extraction, writing and critique, the system mirrors how real teams collaborate — where specialization improves both quality and efficiency.
 
 Rather than functioning as a single-response AI tool, Veritas presents a scalable framework for building agent-driven research systems capable of producing structured, explainable, and high-quality outputs.
 
